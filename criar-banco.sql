@@ -1,3 +1,5 @@
+comercialDROP DATABASE comercial;
+
 CREATE DATABASE comercial; 
 
 USE comercial;
@@ -107,3 +109,11 @@ FOREIGN KEY(n_numevenda)
 REFERENCES comvenda (n_numevenda)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION;
+
+ALTER TABLE comclien ADD COLUMN c_cidaclien VARCHARACTER(50);
+
+ALTER TABLE comclien ADD COLUMN c_estclien VARCHARACTER(50);
+
+ALTER TABLE comclien DROP COLUMN c_estclien;
+
+ALTER TABLE comclien ADD COLUMN c_estzclien VARCHARACTER(50);
