@@ -68,7 +68,7 @@ CREATE TABLE comvendas(
 	PRIMARY KEY(n_numevenda)
 );
 
-create table comivenda(
+CREATE TABLE comivenda(
 	n_numeivenda INTEGER NOT NULL AUTO_INCREMENT,
 	n_numevenda INTEGER NOT NULL,
 	n_numeprodu INTEGER NOT NULL,
@@ -77,3 +77,33 @@ create table comivenda(
 	n_descivenda FLOAT(10,2),
 	PRIMARY KEY(n_numeivenda)
 );
+
+ALTER TABLE comvenda ADD CONSTRAINT fk_comprodu_comforne
+FOREIGN KEY(n_numeforne)
+REFERENCES comforne(n_numeforne)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comvenda ADD CONSTRAINT fk_comprodu_comvende
+FOREIGN KEY(n_numevende)
+REFERENCES comvende(n_numevende)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comvenda ADD CONSTRAINT fk_comvenda_comclien
+FOREIGN KEY(n_numeclien)
+REFERENCES comclien(n_numeclien)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comivenda ADD CONSTRAINT fk_comivenda_comprodu
+FOREIGN KEY(n_numeprodu)
+REFERENCES comprodu (n_numeprodu)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+ALTER TABLE comivenda ADD CONSTRAINT fk_comivenda_comvenda
+FOREIGN KEY(n_numevenda)
+REFERENCES comvenda (n_numevenda)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
