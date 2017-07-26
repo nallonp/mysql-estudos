@@ -150,7 +150,7 @@ CREATE TABLE `comivenda` (
   KEY `fk_comivenda_comvenda` (`n_numevenda`),
   CONSTRAINT `fk_comivenda_comprodu` FOREIGN KEY (`n_numeprodu`) REFERENCES `comprodu` (`n_numeprodu`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_comivenda_comvenda` FOREIGN KEY (`n_numevenda`) REFERENCES `comvenda` (`n_numevenda`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,46 +159,9 @@ CREATE TABLE `comivenda` (
 
 LOCK TABLES `comivenda` WRITE;
 /*!40000 ALTER TABLE `comivenda` DISABLE KEYS */;
-INSERT INTO `comivenda` VALUES (1,1,1,1251.29,1,0.00),(2,1,2,1242.21,2,0.00),(3,1,3,1241.21,3,0.00),(4,1,4,1513.77,4,0.00),(5,1,5,2325.32,5,0.00),(6,2,1,1251.29,6,0.00),(7,3,3,1241.21,7,0.00),(8,4,1,1251.29,1,0.00),(9,5,3,1241.21,2,0.00),(10,6,1,1251.29,3,0.00),(11,7,2,1242.21,4,0.00),(12,8,5,2325.32,5,0.00),(13,9,2,1242.21,6,0.00),(14,10,3,1241.21,7,0.00),(15,11,1,1251.29,1,0.00),(16,12,1,1251.29,2,0.00),(17,13,2,1242.21,3,0.00),(18,14,2,1242.21,4,0.00),(19,15,3,1241.21,5,0.00),(20,16,3,1241.21,6,0.00),(21,17,4,1513.77,7,0.00),(22,18,4,1513.77,1,0.00),(23,19,5,2325.32,2,0.00),(24,20,5,2325.32,3,0.00),(25,2,2,1242.21,4,0.00),(26,3,4,1513.77,5,0.00),(27,4,2,1242.21,6,0.00),(28,5,4,1513.77,7,0.00),(29,6,5,2325.32,1,0.00),(30,7,3,1241.21,2,0.00),(31,8,1,1251.29,3,0.00),(32,9,4,1513.77,4,0.00),(33,10,5,2325.32,5,0.00),(34,11,2,1242.21,6,0.00),(35,12,2,1242.21,7,0.00),(36,13,3,1241.21,1,0.00),(37,14,3,1241.21,2,0.00),(38,15,4,1513.77,3,0.00),(39,16,4,1513.77,4,0.00),(40,17,5,2325.32,5,0.00),(41,18,5,2325.32,6,0.00);
+INSERT INTO `comivenda` VALUES (1,1,1,1251.29,1,0.00),(2,1,1,1242.21,2,0.00),(3,1,3,1241.21,3,0.00),(5,1,5,2325.32,5,0.00),(6,2,1,1251.29,6,0.00),(7,3,3,1241.21,7,0.00),(8,4,1,1251.29,1,0.00),(9,5,3,1241.21,2,0.00),(10,6,1,1251.29,3,0.00),(11,7,2,1242.21,4,0.00),(12,8,5,2325.32,5,0.00),(13,9,2,1242.21,6,0.00),(14,10,3,1241.21,7,0.00),(15,11,1,1251.29,1,0.00),(16,12,1,1251.29,2,0.00),(17,13,2,1242.21,3,0.00),(18,14,2,1242.21,4,0.00),(19,15,3,1241.21,5,0.00),(20,16,3,1241.21,6,0.00),(21,17,4,1513.77,7,0.00),(22,18,4,1513.77,1,0.00),(23,19,5,2325.32,2,0.00),(24,20,5,2325.32,3,0.00),(25,2,2,1242.21,4,0.00),(26,3,4,1513.77,5,0.00),(27,4,2,1242.21,6,0.00),(28,5,4,1513.77,7,0.00),(29,6,5,2325.32,1,0.00),(30,7,3,1241.21,2,0.00),(31,8,1,1251.29,3,0.00),(32,9,4,1513.77,4,0.00),(33,10,5,2325.32,5,0.00),(34,11,2,1242.21,6,0.00),(35,12,2,1242.21,7,0.00),(36,13,3,1241.21,1,0.00),(37,14,3,1241.21,2,0.00),(38,15,4,1513.77,3,0.00),(39,16,4,1513.77,4,0.00),(40,17,5,2325.32,5,0.00),(41,18,5,2325.32,6,0.00),(42,1,4,1513.77,4,0.00);
 /*!40000 ALTER TABLE `comivenda` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tri_vendas_ai` AFTER INSERT ON `comivenda` FOR EACH ROW begin
-
-declare vtotal_itens float(10,2);
-declare vtotal_item float(10,2);
-declare total_item float(10,2);
-
-declare busca_itens cursor for
-select n_totaivenda
-from comivenda
-where n_numevenda = new.n_numevenda;
-
-open busca_itens;
-
-itens : loop
-fetch busca_itens into total_item;
-
-set vtotal_itens = vtotal_itens + total_item;
-end loop itens;
-close busca_itens;
-
-update comvenda set n_totavenda = vtotal_itens
-where n_numevenda = new.n_numevenda;
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `comprodu`
@@ -262,60 +225,9 @@ CREATE TABLE `comvenda` (
 
 LOCK TABLES `comvenda` WRITE;
 /*!40000 ALTER TABLE `comvenda` DISABLE KEYS */;
-INSERT INTO `comvenda` VALUES (1,'1',1,1,1,25141.02,0.00,25141.02,'2015-01-01',3016.92),(2,'2',2,2,2,12476.58,0.00,12476.58,'2015-01-02',3119.15),(3,'3',3,1,1,16257.32,0.00,16257.32,'2015-01-03',1950.88),(4,'4',4,2,2,8704.55,0.00,8704.55,'2015-01-04',2176.14),(5,'5',5,1,1,13078.81,0.00,13078.81,'2015-01-01',1569.46),(6,'6',6,2,2,6079.19,0.00,6079.19,'2015-01-02',1519.80),(7,'7',7,1,1,7451.26,0.00,7451.26,'2015-01-03',894.15),(8,'8',8,2,2,15380.47,0.00,15380.47,'2015-01-04',3845.12),(9,'9',9,1,1,13508.34,0.00,13508.34,'2015-01-01',1621.00),(10,'10',1,2,2,20315.07,0.00,20315.07,'2015-01-02',5078.77),(11,'11',1,1,1,9000.00,0.00,9000.00,'2015-01-01',1080.00),(12,'12',2,2,2,11198.05,0.00,11198.05,'2015-01-02',2799.51),(13,'13',3,1,1,4967.84,0.00,4967.84,'2015-01-03',596.14),(14,'14',3,2,2,7451.26,0.00,7451.26,'2015-01-04',1862.81),(15,'15',5,1,1,10747.36,0.00,10747.36,'2015-01-01',1289.68),(16,'16',6,2,2,13502.34,0.00,13502.34,'2015-01-02',3375.58),(17,'17',7,1,1,22222.99,0.00,22222.99,'2015-01-03',2666.76),(18,'18',8,2,2,15465.69,0.00,15465.69,'2015-01-04',3866.42),(19,'19',9,1,1,4650.64,0.00,4650.64,'2015-01-01',558.08),(20,'20',9,2,2,6975.96,0.00,6975.96,'2015-01-02',1743.99),(21,'21',9,2,2,4000.00,0.00,NULL,'2015-01-02',NULL);
+INSERT INTO `comvenda` VALUES (1,'1',1,1,1,25141.02,0.00,25141.02,'2015-01-01',3016.92),(2,'2',2,2,2,12476.58,0.00,12476.58,'2015-01-02',3119.15),(3,'3',3,1,1,16257.32,0.00,16257.32,'2015-01-03',1950.88),(4,'4',4,2,2,8704.55,0.00,8704.55,'2015-01-04',2176.14),(5,'5',5,1,1,13078.81,0.00,13078.81,'2015-01-01',1569.46),(6,'6',6,2,2,6079.19,0.00,6079.19,'2015-01-02',1519.80),(7,'7',7,1,1,7451.26,0.00,7451.26,'2015-01-03',894.15),(8,'8',8,2,2,15380.47,0.00,15380.47,'2015-01-04',3845.12),(9,'9',9,1,1,13508.34,0.00,13508.34,'2015-01-01',1621.00),(10,'10',1,2,2,20315.07,0.00,20315.07,'2015-01-02',5078.77),(11,'11',1,1,1,9000.00,0.00,9000.00,'2015-01-01',1080.00),(12,'12',2,2,2,11198.05,0.00,11198.05,'2015-01-02',2799.51),(13,'13',3,1,1,4967.84,0.00,4967.84,'2015-01-03',596.14),(14,'14',3,2,2,7451.26,0.00,7451.26,'2015-01-04',1862.81),(15,'15',5,1,1,10747.36,0.00,10747.36,'2015-01-01',1289.68),(16,'16',6,2,2,13502.34,0.00,13502.34,'2015-01-02',3375.58),(17,'17',7,1,1,22222.99,0.00,22222.99,'2015-01-03',2666.76),(18,'18',8,2,2,15465.69,0.00,15465.69,'2015-01-04',3866.42),(19,'19',9,1,1,4650.64,0.00,4650.64,'2015-01-01',558.08),(20,'20',9,2,2,6975.96,0.00,6975.96,'2015-01-02',1743.99),(21,'21',9,2,2,4000.00,0.00,4000.00,'2015-01-02',1000.00);
 /*!40000 ALTER TABLE `comvenda` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tri_vendas_bi` BEFORE INSERT ON `comvenda` FOR EACH ROW begin
-declare percentual_comissao float(10,2);
-declare valor_comissao float(10,2);
-
-
-select rt_percentual_comissao(new.n_numevende)
-into percentual_comissao;
-
-set valor_comissao = ((new.n_totavenda * percentual_comissao) / 100);
-
-set new.n_vcomvenda = valor_comissao;
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `tri_vendas_bu` BEFORE UPDATE ON `comvenda` FOR EACH ROW begin
-declare percentual_comissao float(10,2);
-declare valor_comissao float(10,2);
-
-if (old.n_totavenda <> new.n_totavenda) then
-	select rt_percentual_comissao(new.n_numevende)
-	into percentual_comissao;
-	set valor_comissao = ((new.n_totavenda * percentual_comissao) / 100);
-	set new.n_vcomvenda = valor_comissao;
-end if;
-end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `comvende`
@@ -360,64 +272,16 @@ UNLOCK TABLES;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `rt_nome_cliente`(vn_numeclien int) RETURNS varchar(50) CHARSET utf8
 begin
-declare nome varchar(50);
-select c_nomeclien into nome
-from comclien
-where n_numeclien = vn_numeclien;
-return nome;
-end ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP FUNCTION IF EXISTS `rt_percentual_comissao` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `rt_percentual_comissao`(
-	`vn_n_numevende` int
-
-) RETURNS float
-    DETERMINISTIC
-BEGIN
-	DECLARE percentual_comissao float(10,2);
-	SELECT n_porcvende
-	INTO percentual_comissao
-	FROM comvende
-	WHERE n_numevende = vn_n_numevende;
-	RETURN percentual_comissao;
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `compras_cliente` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `compras_cliente`(IN `cod_cliente` VARCHAR(10), OUT `c_codiclien` VARCHAR(10), OUT `c_codivenda` VARCHAR(10), OUT `c_nomeclien` VARCHAR(150))
-    READS SQL DATA
-    COMMENT 'Retorna as compras realizadas por um cliente'
-BEGIN
-	SELECT c_codiclien 'Num Cliente', c_codivenda 'Cod Venda', c_nomeclien 'Nome'  
-	FROM comvenda
-	JOIN comclien ON comvenda.n_numeclien = comclien.n_numeclien
-	WHERE c_codiclien = cod_cliente;
-END ;;
+		
+				declare nome varchar(50);
+			
+				select c_nomeclien  into nome
+				  from comclien
+				where n_numeclien = vn_numeclien;
+			 
+				return nome;
+			 
+			end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -434,9 +298,10 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `processa_comissionamento`(
-		in  data_inicial     date,
-        in  data_final       date  ,
-		out total_processado int )
+	IN `data_inicial` date,
+	IN `data_final` date  ,
+	OUT `total_processado` int 
+)
 begin
 			
 			declare total_venda    float(10,2) default 0;
@@ -447,75 +312,69 @@ begin
 			declare aux            int         default 0;
 			declare fimloop        int default 0;
 			
-			## cursor para buscar os registros a serem 
-			## processados entre a data inicial e data final
-			## e valor total de venda é maior que zero
 			declare busca_pedido cursor for 
 				select n_numevenda,
 				       n_totavenda,
-					   n_numevende
-				  from comvenda
-				 where d_datavenda between data_inicial 
-				 	and data_final
-				  	and n_totavenda > 0 ;
-			
-            ## Faço aqui um tratamento para o banco não 
-			## executar o loop quando ele terminar
-			## evitando que retorne qualquer erro
+					    n_numevende
+				from comvenda
+				where d_datavenda between data_inicial 
+				and data_final
+				and n_totavenda > 0 ;
+          			
 			declare 
 			continue handler 
 			for sqlstate '02000' 
 			set fimloop  = 1;
 
 			
-            ## abro o cursor				
+            
 			open busca_pedido;
 				
-				## inicio do loop
+				
 				vendas: LOOP
 				
-				##Aqui verifico que se o loop terminou
-				##e saio do loop
+				
+				
 				if fimloop  = 1 then 
 				  leave  vendas;
 				end if;
 				
-				##recebo o resultado da consulta em cada variável
+				
 				fetch busca_pedido into venda, total_venda, 
 				vendedor;
 				
-				## busco o valor do percentual de cada vendedor
+				
 				select n_porcvende 
 			      into comissao 
 			      from comvende
 			     where n_numevende = vendedor;
 				
-				## verifico se o percentual do vendedor é maior
-				## que zero logo após a condição deve ter o then
+				
+				
 				if (comissao > 0 ) then 
-				    ## calculo o valor da comissao
+				    
 					set valor_comissao  = 
 						((total_venda * comissao)  / 100);
 					
-					## faço o update na tabela comvenda com o 
-					## valor da comissão
+					
+					
 					update comvenda set 
 					n_vcomvenda = valor_comissao
 					where n_numevenda = venda;
 					commit; 
 				
-				## verifico se o percentual do vendedor é igual 
-				## zero na regra do nosso sistema se o vendedor 
-				## tem 0 ele ganha 0 porcento de comissão
+				
+				
+				
                 elseif(comissao = 0) then
 				    
 					update comvenda set n_vcomvenda = 0
 					where n_numevenda = venda;
 					commit;
 				
-				## se ele não possuir registro no percentual de 
-			    ## comissão ele irá ganhar 1 de comissão
-				## isso pela regra de negócio do nosso sistema
+				
+			    
+				
 				else 
 					set comissao = 1;
 					set valor_comissao = 
@@ -525,42 +384,23 @@ begin
 						comvenda set n_vcomvenda = valor_comissao
 					where n_numevenda = venda;
 					commit;  
-				## fecho o if	 
+				
 				end if;
 				
 				set comissao = 0;
-				##utilizo a variável aux para contar a quantidade
+				
 				set  aux      = aux +1 ;
 			end loop vendas;
-				## atribuo o total de vendas para a variável de
-				## saída
+				
+				
 			set total_processado = aux;
-			## fecho o cursor
+			
 			close busca_pedido;
 		
-			##retorno o total de vendas processadas
+			
 			
 			
 			end ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `rt_comclien` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `rt_comclien`()
-BEGIN
-	SELECT * FROM comclien;
-END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -576,4 +416,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-13 18:41:38
+-- Dump completed on 2017-07-26 18:59:58
